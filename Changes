@@ -1,0 +1,10 @@
+---
+global:
+  name: Template-Plugin-Filter-Pipe
+releases:
+  - author: 'Marcel Gruenauer <marcel@cpan.org>'
+    changes:
+      - original version
+    date: 2007-11-11T23:35:25Z
+    tags: []
+    version: 0.01
