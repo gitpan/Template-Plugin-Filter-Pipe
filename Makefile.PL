@@ -1,21 +1,48 @@
-use inc::Module::Install;
-name 'Template-Plugin-Filter-Pipe';
-all_from 'lib/Template/Plugin/Filter/Pipe.pm';
-perl_version '5.006';
 
-requires 'Template';
-requires 'Text::Pipe';
+use strict;
+use warnings;
 
-build_requires 'Test::Differences';
-build_requires 'Test::More' => '0.70';
+ BEGIN { require 5.008; } 
 
-process_templates(
-    first_year => 2007,
-    rest_from  => "$ENV{HOME}/.mitlib/standard_pod",
-    start_tag  => '{%',
-    end_tag    => '%}',
-);
+use ExtUtils::MakeMaker 6.11;
 
-use_standard_tests(without => 'pod_coverage');
-auto_include;
-WriteAll;
+
+
+my %WriteMakefileArgs = (
+                       'test' => {
+                                   'TESTS' => 't/*.t'
+                                 },
+                       'NAME' => 'Template::Plugin::Filter::Pipe',
+                       'DISTNAME' => 'Template-Plugin-Filter-Pipe',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.11'
+                                               },
+                       'AUTHOR' => 'Marcel Gruenauer <marcel@cpan.org>',
+                       'BUILD_REQUIRES' => {},
+                       'ABSTRACT' => 'Filter plugin adapter for Text::Pipe',
+                       'EXE_FILES' => [],
+                       'VERSION' => '1.100860',
+                       'PREREQ_PM' => {
+                                        'Scalar::Util' => '0',
+                                        'parent' => '0',
+                                        'English' => '0',
+                                        'Template' => '0',
+                                        'Template::Plugin::Filter' => '0',
+                                        'Carp' => '0',
+                                        'Test::More' => '0.88',
+                                        'Test::Differences' => '0',
+                                        'File::Find' => '0',
+                                        'File::Temp' => '0',
+                                        'Text::Pipe' => '0'
+                                      },
+                       'LICENSE' => 'perl'
+                     );
+
+
+delete $WriteMakefileArgs{LICENSE}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.31) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+
